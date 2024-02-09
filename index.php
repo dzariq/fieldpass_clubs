@@ -10,7 +10,7 @@ $pubsub = new PubSubClient([
 ]);
 
 // Get the topic name
-$topicName = 'projects/chatbot-401803/topics/new-club';
+$topicName = 'new-club';
 
 // Get the topic
 $topic = $pubsub->topic($topicName);
@@ -26,4 +26,3 @@ $topic->publish([
 ]);
 
 echo "Event published successfully.\n";
-
