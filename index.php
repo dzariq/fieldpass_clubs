@@ -10,7 +10,7 @@ $pubsub = new PubSubClient([
 ]);
 
 // Get the topic name
-$topicName = 'new-club';
+$topicName = 'projects/chatbot-401803/topics/new-club';
 
 // Get the topic
 $topic = $pubsub->topic($topicName);
