@@ -26,3 +26,4 @@ $topic->publish([
 ]);
 
 echo "Event published successfully.\n";
+
