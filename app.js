@@ -10,7 +10,10 @@ const { PubSub } = require('@google-cloud/pubsub');
 const { GoogleAuth } = require('google-auth-library');
 
 const topicName = 'projects/chatbot-401803/topics/new-club';
-const keyFilePath = path.join(__dirname, 'fieldpass.privatekey.json');
+// const keyFilePath = path.join(__dirname, 'fieldpass.privatekey.json');
+const fs = require('fs');
+
+const keyFilePath = JSON.parse(fs.readFileSync('fieldpass.privatekey.json'));
 
 app.use(express.json());
 app.post('/', (req, res) => {
