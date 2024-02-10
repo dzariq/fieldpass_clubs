@@ -12,7 +12,7 @@ const { PubSub } = require('@google-cloud/pubsub');
 const pubsub = new PubSub();
 
 // Define the topic name
-const topicName = 'new-club';
+const topicName = 'projects/chatbot-401803/topics/new-club';
 
 // This middleware is available in Express v4.16.0 onwards
 app.use(express.json());
