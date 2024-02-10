@@ -9,8 +9,9 @@ const app = express();
 const { PubSub } = require('@google-cloud/pubsub');
 
 // Create a new Pub/Sub client
-const pubsub = new PubSub();
-
+const pubsub = new PubSub({
+  projectId: 'chatbot-401803',
+});
 // Define the topic name
 const topicName = 'projects/chatbot-401803/topics/new-club';
 
