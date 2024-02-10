@@ -31,21 +31,19 @@ app.post('/', (req, res) => {
 
 // Publish a message to the topic
 async function publishMessage() {
-   // Message to publish
-   const data = JSON.stringify({ message: 'Hello from CLUB Function!' });
+  const data = JSON.stringify({ message: 'Hello from CLUBS!' });
 
-   try {
-     // Get the Pub/Sub topic
-     const topic = pubsub.topic(topicName);
- 
-     // Publish the message to the topic
-     await topic.publish(Buffer.from(data));
- 
-     res.status(200).send('Message published to Pub/Sub topic.');
-   } catch (error) {
-     console.error('Error publishing message:', error);
-     res.status(500).send('Error publishing message to Pub/Sub topic.');
-   }
+  try {
+    // Get the topic object
+    const topic = pubsub.topic(topicName);
+
+    // Publish the message
+    const messageId = await topic.publish(Buffer.from(data));
+
+    console.log(`Message ${messageId} published.`);
+  } catch (error) {
+    console.error('Error publishing message:', error);
+  }
 }
 
 // [END run_pubsub_handler]
