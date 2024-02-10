@@ -7,14 +7,22 @@
 const express = require('express');
 const app = express();
 const { PubSub } = require('@google-cloud/pubsub');
+
+// Create a new Pub/Sub client
 const pubsub = new PubSub();
 
 // Define the topic name
 const topicName = 'new-club';
 
+// This middleware is available in Express v4.16.0 onwards
 app.use(express.json());
+// [END run_pubsub_server_setup]
+// [END cloudrun_pubsub_server_setup]
 
+// [START cloudrun_pubsub_handler]
+// [START run_pubsub_handler]
 app.post('/', (req, res) => {
+  // Call the publishMessage function to publish the message
   publishMessage();
 
   res.status(200).send(`OK`);
@@ -24,7 +32,7 @@ app.post('/', (req, res) => {
 // Publish a message to the topic
 async function publishMessage() {
    // Message to publish
-   const data = JSON.stringify({ message: 'Hello from CLUB MICROSERVICE!' });
+   const data = JSON.stringify({ message: 'Hello from CLUB Function!' });
 
    try {
      // Get the Pub/Sub topic
@@ -40,6 +48,7 @@ async function publishMessage() {
    }
 }
 
-
+// [END run_pubsub_handler]
+// [END cloudrun_pubsub_handler]
 
 module.exports = app;
