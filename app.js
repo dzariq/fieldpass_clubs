@@ -25,6 +25,7 @@ admin.initializeApp({
 // Middleware to validate Firebase JWT token
 function validateFirebaseToken(req, res, next) {
   const idToken = req.headers.authorization.split(' ')[1]; // Extract JWT token from Authorization header
+  console.log(idToken)
 
   admin.auth().verifyIdToken(idToken,true)
     .then(decodedToken => {
