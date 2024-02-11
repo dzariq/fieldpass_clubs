@@ -14,6 +14,30 @@ const topicName = 'projects/chatbot-401803/topics/new-club';
 const fs = require('fs');
 
 const keyFilePath = JSON.parse(fs.readFileSync('./fieldpass.privatekey.json'));
+const admin = require('firebase-admin');
+
+// Initialize Firebase Admin SDK (replace with your Firebase config)
+const serviceAccount = require('./firebase.serviceaccountkey.json');
+
+admin.initializeApp({
+  credential: admin.credential.cert(serviceAccount)
+});
+
+// Middleware to validate Firebase JWT token
+function validateFirebaseToken(req, res, next) {
+  const idToken = req.headers.authorization.split(' ')[1]; // Extract JWT token from Authorization header
+
+  admin.auth().verifyIdToken(idToken)
+    .then(decodedToken => {
+      // Token is valid, store user information in request object for further processing
+      req.user = decodedToken;
+      next();
+    })
+    .catch(error => {
+      console.error('Error validating Firebase JWT token:', error);
+      res.status(401).json({ error: 'Unauthorized' });
+    });
+}
 
 app.use(express.json());
 
@@ -27,7 +51,7 @@ function validateCreateClub(req, res, next) {
   next();
 }
 
-app.post('/club', validateCreateClub, (req, res) => {
+app.post('/club', [validateCreateClub,validateFirebaseToken], (req, res) => {
   const { clubName } = req.body;
   publishMessage();
   res.status(201).json({ message: 'Club created successfully' });
@@ -37,8 +61,6 @@ async function publishMessage() {
   const data = JSON.stringify({ message: 'Hello from CLUBS!' });
 
   try {
-    //const client = await authenticateWithServiceAccount();
-
     const pubsub = new PubSub({
       projectId: 'chatbot-401803',
       credentials: {
