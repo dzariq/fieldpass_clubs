@@ -16,11 +16,21 @@ const fs = require('fs');
 const keyFilePath = JSON.parse(fs.readFileSync('./fieldpass.privatekey.json'));
 
 app.use(express.json());
-app.post('/', (req, res) => {
-  publishMessage();
 
-  res.status(200).send(`OK`);
-  return;
+function validateCreateClub(req, res, next) {
+  const { clubName } = req.body;
+
+  if (!clubName ) {
+      return res.status(400).json({ error: 'Missing required fields' });
+  }
+
+  next();
+}
+
+app.post('/club', validateCreateClub, (req, res) => {
+  const { clubName } = req.body;
+  publishMessage();
+  res.status(201).json({ message: 'Club created successfully' });
 });
 
 async function publishMessage() {
@@ -46,17 +56,5 @@ async function publishMessage() {
   }
 }
 
-async function authenticateWithServiceAccount() {
-  const auth = new GoogleAuth({
-      keyFilename: keyFilePath,
-      scopes: ['https://www.googleapis.com/auth/cloud-platform']
-  });
-
-  const client = await auth.getClient();
-  return client;
-}
-
-// [END run_pubsub_handler]
-// [END cloudrun_pubsub_handler]
 
 module.exports = app;
