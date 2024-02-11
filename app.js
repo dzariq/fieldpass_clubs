@@ -26,7 +26,7 @@ admin.initializeApp({
 function validateFirebaseToken(req, res, next) {
   const idToken = req.headers.authorization.split(' ')[1]; // Extract JWT token from Authorization header
 
-  admin.auth().verifyIdToken(idToken)
+  admin.auth().verifyIdToken(idToken,true)
     .then(decodedToken => {
       // Token is valid, store user information in request object for further processing
       req.user = decodedToken;
