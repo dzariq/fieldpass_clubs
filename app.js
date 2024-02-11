@@ -24,9 +24,9 @@ admin.initializeApp({
 
 // Middleware to validate Firebase JWT token
 function validateFirebaseToken(req, res, next) {
-  console.log(req.headers.X-Forwarded-Authorization)
+  console.log(req.headers["x-forwarded-authorization"])
 
-  const idToken = req.headers.X-Forwarded-Authorization.split(' ')[1]; // Extract JWT token from Authorization header
+  const idToken = req.headers["x-forwarded-authorization"].split(' ')[1]; // Extract JWT token from Authorization header
 
   admin.auth().verifyIdToken(idToken,true)
     .then(decodedToken => {
