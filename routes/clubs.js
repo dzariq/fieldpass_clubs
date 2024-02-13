@@ -16,7 +16,7 @@ const publishMessage = require('../pubsub/publish');
  *       200:
  *         description: Success
  */
-router.get('/', (req, res) => {
+router.get('/', [validateFirebaseToken], (req, res) => {
     Club.findAll({ include: Country }).then((clubs) => {
         console.log('All clubs:', clubs);
         res.status(201).json(clubs);
