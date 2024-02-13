@@ -8,7 +8,25 @@ securityDefinitions:
     name: Authorization
     in: header
 paths:
-  /club:
+  /clubs:
+    get:
+      security:
+        - firebaseAuth: []
+      summary: Get all clubs
+      operationId: getClub
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      x-google-backend:
+        address: https://fieldpass-clubs-muyb2hx66a-as.a.run.app/clubs
+
+      responses:
+        '201':
+          description: Club retrieved successfully
+        '400':
+          description: Invalid request
+  /clubs:
     post:
       security:
         - firebaseAuth: []
@@ -26,7 +44,7 @@ paths:
           schema:
             type: string
       x-google-backend:
-        address: https://fieldpass-clubs-muyb2hx66a-as.a.run.app/club
+        address: https://fieldpass-clubs-muyb2hx66a-as.a.run.app/clubs
 
       responses:
         '201':

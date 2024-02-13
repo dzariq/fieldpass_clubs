@@ -4,7 +4,8 @@ const Club = require('../models/clubs');
 const Country = require('../models/countries');
 const Sport = require('../models/sports');
 const validateFirebaseToken = require('../middlewares/authValidator')
-const validateCreateClub = require('../middlewares/clubsValidator')
+const validateCreateClub = require('../middlewares/clubsValidator');
+const publishMessage = require('../pubsub/publish');
 
 /**
  * @swagger
