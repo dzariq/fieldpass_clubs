@@ -1,8 +1,9 @@
 const { Sequelize } = require('sequelize');
+require('dotenv').config();
 
 // Replace 'your_database_name', 'your_database_user', and 'your_database_password' with your MySQL database details
-const sequelize = new Sequelize('fieldpass_club', 'ligakita', '#1Sampai9', {
-  host: '104.248.75.228',
+const sequelize = new Sequelize('fieldpass_club', process.env.DB_USER, process.env.DB_PASSWORD, {
+  host: process.env.DB_HOST,
   dialect: 'mysql',
 });
 

@@ -1,5 +1,7 @@
 const fs = require('fs');
-const keyFilePath = JSON.parse(fs.readFileSync('./fieldpass.privatekey.json'));
+require('dotenv').config();
+const keyFilePath = JSON.parse(process.env.GOOGLE_PUBSUB_KEY);
+
 const topicName = 'projects/chatbot-401803/topics/new-club';
 const { PubSub } = require('@google-cloud/pubsub');
 

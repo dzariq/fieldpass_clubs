@@ -26,7 +26,6 @@ paths:
           description: Club retrieved successfully
         '400':
           description: Invalid request
-  /clubs:
     post:
       security:
         - firebaseAuth: []
